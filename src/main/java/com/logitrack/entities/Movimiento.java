@@ -59,7 +59,8 @@ public class Movimiento {
     @JoinColumn(name = "bodega_destino_id")
     private Bodega bodegaDestino;
 
-    @Valid    
+    @Valid
+    @NotEmpty(message = "El movimiento debe contener al menos un detalle.")     
     @OneToMany(mappedBy = "movimiento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<DetalleMovimiento> detalles = new ArrayList<>();
