@@ -24,7 +24,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.logitrack.audit.AuditoriaListener;
+import jakarta.persistence.EntityListeners;
+
 @Entity
+@EntityListeners(AuditoriaListener.class)
 @Table(name = "movimientos")
 @Data
 @NoArgsConstructor

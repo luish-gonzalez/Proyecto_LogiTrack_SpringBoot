@@ -14,7 +14,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.logitrack.audit.AuditoriaListener;
+import jakarta.persistence.EntityListeners;
+
 @Entity
+@EntityListeners(AuditoriaListener.class)
 @Table(name = "detalle_movimientos")
 @Data
 @NoArgsConstructor
