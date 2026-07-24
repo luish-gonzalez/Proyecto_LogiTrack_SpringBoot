@@ -678,3 +678,14 @@ SELECT setval(
     ),
     TRUE
 );
+
+
+------------------------>
+
+SELECT * FROM usuarios;
+SELECT * FROM bodegas;
+SELECT * FROM productos;
+SELECT * FROM inventarios;
+SELECT * FROM movimientos;
+SELECT * FROM detalles_movimiento;
+SELECT * FROM auditorias;
