@@ -1,6 +1,5 @@
 package com.logitrack.security;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
