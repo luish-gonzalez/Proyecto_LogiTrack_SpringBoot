@@ -103,6 +103,28 @@ public class AuditoriaService {
         auditoriaRepository.delete(auditoria);
     }
 
+    @Transactional
+public void registrar(
+        TipoOperacion tipoOperacion,
+        String usuario,
+        String entidadAfectada,
+        Long entidadId,
+        String valoresAnteriores,
+        String valoresNuevos) {
+
+    Auditoria auditoria = new Auditoria();
+
+    auditoria.setTipoOperacion(tipoOperacion);
+    auditoria.setFechaHora(LocalDateTime.now());
+    auditoria.setUsuario(usuario);
+    auditoria.setEntidadAfectada(entidadAfectada);
+    auditoria.setEntidadId(entidadId);
+    auditoria.setValoresAnteriores(valoresAnteriores);
+    auditoria.setValoresNuevos(valoresNuevos);
+
+    auditoriaRepository.save(auditoria);
+}
+
     private AuditoriaDto convertirADto(Auditoria auditoria) {
 
         return new AuditoriaDto(

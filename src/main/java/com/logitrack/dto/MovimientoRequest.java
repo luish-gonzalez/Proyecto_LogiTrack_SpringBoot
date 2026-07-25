@@ -26,7 +26,6 @@ public class MovimientoRequest {
     private Long bodegaDestinoId;
 
     @NotEmpty(message = "Debe registrar al menos un detalle del movimiento.")
-    @Valid
-    private List<DetalleMovimientoRequest> detalles;
+    private List<@Valid DetalleMovimientoRequest> detalles;
 
 }

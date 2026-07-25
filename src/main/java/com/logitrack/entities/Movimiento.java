@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,11 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logitrack.audit.AuditoriaListener;
-import jakarta.persistence.EntityListeners;
-
 @Entity
-@EntityListeners(AuditoriaListener.class)
 @Table(name = "movimientos")
 @Data
 @NoArgsConstructor
@@ -59,9 +55,7 @@ public class Movimiento {
     @JoinColumn(name = "bodega_destino_id")
     private Bodega bodegaDestino;
 
-    @Valid
-    @NotEmpty(message = "El movimiento debe contener al menos un detalle.")     
     @OneToMany(mappedBy = "movimiento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<DetalleMovimiento> detalles = new ArrayList<>();
+    private List<@Valid DetalleMovimiento> detalles = new ArrayList<>();
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -68,8 +69,7 @@ public class MovimientoController {
     public ResponseEntity<MovimientoResponse> registrarMovimiento(
             @Valid @RequestBody MovimientoRequest request) {
 
-        MovimientoResponse response =
-                movimientoService.registrarMovimiento(request);
+        MovimientoResponse response = movimientoService.registrarMovimiento(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -80,6 +80,17 @@ public class MovimientoController {
         movimientoService.eliminar(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/fecha")
+    public ResponseEntity<List<MovimientoResponse>> buscarPorRangoFechas(
+            @RequestParam LocalDateTime fechaInicio,
+            @RequestParam LocalDateTime fechaFin) {
+
+        return ResponseEntity.ok(
+                movimientoService.buscarPorRangoFechas(
+                        fechaInicio,
+                        fechaFin));
     }
 
 }

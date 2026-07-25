@@ -10,6 +10,7 @@ import com.logitrack.entities.Movimiento;
 import com.logitrack.entities.Producto;
 import com.logitrack.entities.Usuario;
 import com.logitrack.enums.TipoMovimiento;
+import com.logitrack.enums.TipoOperacion;
 import com.logitrack.exceptions.BusinessException;
 import com.logitrack.exceptions.ResourceNotFoundException;
 import com.logitrack.repositories.BodegaRepository;
@@ -35,22 +36,25 @@ public class MovimientoService {
     private final ProductoRepository productoRepository;
     private final BodegaRepository bodegaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final AuditoriaService auditoriaService;
 
     public MovimientoService(
-            MovimientoRepository movimientoRepository,
-            DetalleMovimientoRepository detalleMovimientoRepository,
-            InventarioRepository inventarioRepository,
-            ProductoRepository productoRepository,
-            BodegaRepository bodegaRepository,
-            UsuarioRepository usuarioRepository) {
+        MovimientoRepository movimientoRepository,
+        DetalleMovimientoRepository detalleMovimientoRepository,
+        InventarioRepository inventarioRepository,
+        ProductoRepository productoRepository,
+        BodegaRepository bodegaRepository,
+        UsuarioRepository usuarioRepository,
+        AuditoriaService auditoriaService) {
 
-        this.movimientoRepository = movimientoRepository;
-        this.detalleMovimientoRepository = detalleMovimientoRepository;
-        this.inventarioRepository = inventarioRepository;
-        this.productoRepository = productoRepository;
-        this.bodegaRepository = bodegaRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
+    this.movimientoRepository = movimientoRepository;
+    this.detalleMovimientoRepository = detalleMovimientoRepository;
+    this.inventarioRepository = inventarioRepository;
+    this.productoRepository = productoRepository;
+    this.bodegaRepository = bodegaRepository;
+    this.usuarioRepository = usuarioRepository;
+    this.auditoriaService = auditoriaService;
+}
 
     public List<MovimientoResponse> listarTodos() {
 
@@ -245,13 +249,16 @@ public class MovimientoService {
 
             detalles.add(detalle);
         }
-
         detalleMovimientoRepository.saveAll(detalles);
 
-        movimiento.setDetalles(detalles);
-
-        movimiento = movimientoRepository.save(movimiento);
-
+        auditoriaService.registrar(
+                TipoOperacion.INSERT,
+                usuario.getUsername(),
+                "Movimiento",
+                movimiento.getId(),
+                null,
+                "Movimiento " + movimiento.getTipo() + " registrado");
+        
         return convertirAResponse(movimiento);
     }
     private void actualizarInventario(
@@ -342,6 +349,17 @@ public void eliminar(Long id) {
                             "Movimiento no encontrado con id: " + id));
 
     movimientoRepository.delete(movimiento);
+}
+
+public List<MovimientoResponse> buscarPorRangoFechas(
+        LocalDateTime fechaInicio,
+        LocalDateTime fechaFin) {
+
+    return movimientoRepository
+            .findByFechaBetween(fechaInicio, fechaFin)
+            .stream()
+            .map(this::convertirAResponse)
+            .toList();
 }
 
 }

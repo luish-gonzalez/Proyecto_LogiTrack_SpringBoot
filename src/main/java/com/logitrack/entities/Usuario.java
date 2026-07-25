@@ -20,11 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import com.logitrack.audit.AuditoriaListener;
-import jakarta.persistence.EntityListeners;
-
 @Entity
-@EntityListeners(AuditoriaListener.class)
 @Table(name = "usuarios")
 @Data
 @NoArgsConstructor
