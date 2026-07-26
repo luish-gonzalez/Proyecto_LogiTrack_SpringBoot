@@ -18,8 +18,8 @@ public class MovimientoRequest {
     @NotNull(message = "El tipo de movimiento es obligatorio.")
     private TipoMovimiento tipo;
 
-    @NotNull(message = "El usuario responsable es obligatorio.")
-    private Long usuarioResponsableId;
+   /* @NotNull(message = "El usuario responsable es obligatorio.")
+    private Long usuarioResponsableId;*/
 
     private Long bodegaOrigenId;
 

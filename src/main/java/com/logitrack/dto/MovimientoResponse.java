@@ -18,13 +18,14 @@ public class MovimientoResponse {
     private LocalDateTime fecha;
 
     private TipoMovimiento tipo;
-
+    
     private Long usuarioResponsableId;
 
+    private String usuarioResponsableNombre;
+    
     private Long bodegaOrigenId;
-
+    
     private Long bodegaDestinoId;
-
     private List<DetalleMovimientoRequest> detalles;
 
 }
