@@ -19,7 +19,7 @@ import com.logitrack.services.ProductoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
 
     private final ProductoService productoService;

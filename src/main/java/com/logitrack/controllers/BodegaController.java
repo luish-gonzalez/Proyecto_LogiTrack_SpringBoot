@@ -19,7 +19,7 @@ import com.logitrack.services.BodegaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/bodegas")
+@RequestMapping("/api/bodegas")
 public class BodegaController {
 
     private final BodegaService bodegaService;
